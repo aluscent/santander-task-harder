@@ -5,7 +5,7 @@ import data.rows.Guarantor
 
 import scala.util.parsing.combinator._
 
-object GuarantorParser extends RegexParsers {
+object JsonGuarantorParser extends RegexParsers {
   // Basic tokens
   def stringLiteral: Parser[String] = "\"" ~> """[^"]*""".r <~ "\""
   def number: Parser[Double] = """-?\d+(\.\d+)?""".r ^^ { _.toDouble }

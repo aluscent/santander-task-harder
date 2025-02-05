@@ -2,7 +2,7 @@ package com.alitariverdy
 package business
 
 import data.rows.{Transaction, TransitoryRow}
-import utils.GuarantorParser
+import utils.JsonGuarantorParser
 
 import org.apache.spark.sql.{Dataset, Encoder}
 
@@ -11,7 +11,7 @@ object ParseGuarantors {
       df: Dataset[Transaction]
   )(implicit etr: Encoder[TransitoryRow]): Dataset[TransitoryRow] =
     df.flatMap { txn =>
-      GuarantorParser.parseJson(txn.guarantors).toOption match {
+      JsonGuarantorParser.parseJson(txn.guarantors).toOption match {
         case Some(guarantors) =>
           guarantors.map(g => txn.convertToTransitoryRow(g.name, g.percentage))
         case None => Seq()
